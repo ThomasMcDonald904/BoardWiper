@@ -60,7 +60,7 @@ boolean MultiStepper::run()
 	    _steppers[i]->runSpeed();
 	    ret = true;
 	}
-	// Caution: it has een reported that if any motor is used with acceleration outside of
+	// Caution: it has been reported that if any motor is used with acceleration outside of
 	// MultiStepper, this code is necessary, you get 
 	// strange results where it moves in the wrong direction for a while then 
 	// slams back the correct way.
