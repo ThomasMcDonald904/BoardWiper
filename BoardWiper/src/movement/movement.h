@@ -1,7 +1,7 @@
 #include "AccelStepper.h"
 
-const int HOMING_SPEED = 10;
+extern const int HOMING_SPEED;
 
-void moveXAxis(){};
-void moveYAxis(){};
-void homeSteppers(){};
+void moveXAxis();
+void moveYAxis();
+void homeSteppers();

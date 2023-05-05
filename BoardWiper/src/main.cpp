@@ -1,24 +1,23 @@
+#include <Wire.h>
 #include <Arduino.h>
 #include "AccelStepper.h"
 #include "MultiStepper.h"
 #include "ezButton.h"
 #include "lcd/lcd.h"
 #include "Encoder.h"
+#include "StateMachine.h"
 
+constexpr int SOFTWARE_X_ENDSTOP = 1000;
+constexpr int SOFTWARE_Y_ENDSTOP = 1000;
 
-const int SOFTWARE_X_ENDSTOP = 1000;
-const int SOFTWARE_Y_ENDSTOP = 1000;
+constexpr int X_LIMITSWITCH_PIN = 33;
+constexpr int Y_LIMITSWITCH_PIN = 32;
 
-const int X_LIMITSWITCH_PIN = 33;
-const int Y_LIMITSWITCH_PIN = 32;
+constexpr int X_STEPPER_DIRECTION_PIN = 130;
+constexpr int X_STEPPER_STEP_PIN = 129;
+constexpr int Y_STEPPER_DIRECTION_PIN = 133;
+constexpr int Y_STEPPER_STEP_PIN = 132;
 
-const int X_STEPPER_DIRECTION_PIN = 130;
-const int X_STEPPER_STEP_PIN = 129;
-const int Y_STEPPER_DIRECTION_PIN = 133;
-const int Y_STEPPER_STEP_PIN = 132;
-
-const int BUTTON_ENCODER_PIN1 = 14;
-const int BUTTON_ENCODER_PIN2 = 15;
 
 
 AccelStepper *x_stepper = new AccelStepper(AccelStepper::DRIVER, X_STEPPER_STEP_PIN, X_STEPPER_DIRECTION_PIN);
@@ -28,29 +27,65 @@ MultiStepper stepperManager;
 ezButton *x_limitswitch = new ezButton(X_LIMITSWITCH_PIN);
 ezButton *y_limitswitch = new ezButton(Y_LIMITSWITCH_PIN);
 
-
+bool HomingState()
+{
+	int homedAxes = 0;
+	if (x_limitswitch->isPressed())
+    {
+		homedAxes += 1;
+       	x_stepper->setCurrentPosition(0);
+    }
+    if (y_limitswitch->isPressed())
+    {
+		homedAxes += 1;
+       	y_stepper->setCurrentPosition(0);
+    }
+	return homedAxes == 2;
+}
 
 void setup() {
-	x_stepper->setEnablePin(128);
-	y_stepper->setEnablePin(131);
+	lcd.begin(16, 2);
+	// CurrentState = States::Waking;
 
-	stepperManager.addStepper(*x_stepper);
-	stepperManager.addStepper(*y_stepper);
+	// x_stepper->setEnablePin(128);
+	// y_stepper->setEnablePin(131);
 
-	x_limitswitch->setDebounceTime(50);
-	y_limitswitch->setDebounceTime(50);
+	// stepperManager.addStepper(*x_stepper);
+	// stepperManager.addStepper(*y_stepper);
 
-	TopMenu.begin(display, displayValue);
+	// x_limitswitch->setDebounceTime(50);
+	// y_limitswitch->setDebounceTime(50);
+	// TopMenu.begin(display, displayValue);
+	lcd.print("aaa berv");
 }
 
 void loop() {
-	stepperManager.run();
-	x_limitswitch->loop();
-	y_limitswitch->loop();
+	// switch (CurrentState)
+	// {
+	// case States::Waking:
+	// 	/* code */
+	// 	break;
+	// case States::Homing:
+	// 	if(HomingState())
+	// 	{
+	// 		CurrentState = States::Idle;
+	// 	}
+	// 	break;
+	// case States::Idle:
+	// 	break;
+	// case States::Clearing:
+	// 	break;
+	// default:
+	// 	break;
+	// }
 
-	if (x_stepper->currentPosition() >= SOFTWARE_X_ENDSTOP)
-	{
-		x_stepper->disableOutputs();
-	}
+	// stepperManager.run();
+	// x_limitswitch->loop();
+	// y_limitswitch->loop();
+
+	// if (x_stepper->currentPosition() >= SOFTWARE_X_ENDSTOP)
+	// {
+	// 	x_stepper->disableOutputs();
+	// }
 	
 }

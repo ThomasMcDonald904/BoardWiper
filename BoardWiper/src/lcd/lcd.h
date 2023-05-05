@@ -4,11 +4,15 @@
 #include "Encoder.h"
 
 #define LCD_RS 4
-#define LCD_EN 21
+#define LCD_EN 5
 #define LCD_D4 0
-#define LCD_D5 15
-#define LCD_D6 16
-#define LCD_D7 17
+#define LCD_D5 1
+#define LCD_D6 2
+#define LCD_D7 3
+
+constexpr int BUTTON_ENCODER_PIN1 = 14;
+constexpr int BUTTON_ENCODER_PIN2 = 15;
+
 
 // SimpleMenu MenuSub[3] = {
 //   SimpleMenu("varable A",&valueA),
@@ -23,24 +27,10 @@
 //   SimpleMenu("sub menu B",3,MenuSub)
 // };
 
-LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
-extern Encoder lcd_encoder(BUTTON_ENCODER_PIN1, BUTTON_ENCODER_PIN2);
+extern LiquidCrystal lcd;
+extern Encoder lcd_encoder;
 
-extern SimpleMenu TopMenu(2, MainMenu);
+extern SimpleMenu TopMenu;
 
-// TopMenu
-SimpleMenu MainMenu[1];
-
-// Main Menu
-SimpleMenu Movement[2];
-
-// Movement
-SimpleMenu Home("Home Axes", homeSteppers);
-SimpleMenu MoveAxis[2];
-
-//Move Axis
-SimpleMenu XAxisMove("Move X Axis", moveXAxis);
-SimpleMenu YAxisMove("Move Y Axis", moveYAxis);
-
-void display(SimpleMenu *_menu){};
-void displayValue(SimpleMenu *_menu){};
+void display(SimpleMenu *_menu);
+void displayValue(SimpleMenu *_menu);

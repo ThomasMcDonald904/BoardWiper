@@ -2,8 +2,9 @@
 #include "AccelStepper.h"
 #include "ezButton.h"
 #include "lcd/lcd.h"
+#include "StateMachine.h"
 
-
+const int HOMING_SPEED = 10;
 extern AccelStepper *x_stepper;
 extern AccelStepper *y_stepper;
 extern ezButton *x_limitswitch;
@@ -13,15 +14,7 @@ void homeSteppers()
 {
     x_stepper->setSpeed(-HOMING_SPEED);
     y_stepper->setSpeed(HOMING_SPEED);
-
-    if (x_limitswitch->isPressed())
-    {
-        x_stepper->setCurrentPosition(0);
-    }
-    if (y_limitswitch->isPressed())
-    {
-        y_stepper->setCurrentPosition(0);
-    }
+    CurrentState = States::Homing;
 }
 
 void moveXAxis()
