@@ -3,21 +3,22 @@
 LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 Encoder lcd_encoder(BUTTON_ENCODER_PIN1, BUTTON_ENCODER_PIN2);
 
-SimpleMenu MoveAxis[2] = 
+SimpleMenu MoveAxees[2] = 
 {
-    SimpleMenu("Move Y Axis", moveXAxis),
-    SimpleMenu("Move Y Axis", moveXAxis)
+    SimpleMenu("Move Y Axis", moveXAxisWithEncoder),
+    SimpleMenu("Move Y Axis", moveYAxisWithEncoder)
 };
 
-SimpleMenu Movement[2] = 
+SimpleMenu Movement[3] = 
 {
     SimpleMenu("Home Axes", homeSteppers),
-    SimpleMenu("Move Axes", 2, MoveAxis)
+    SimpleMenu("Move Axes", 2, MoveAxees),
+    SimpleMenu("Clear", clear)
 };
 
 SimpleMenu MainMenu[1] = 
 {
-    SimpleMenu("Movement", 2, Movement) 
+    SimpleMenu("Movement", 3, Movement) 
 };
 
 SimpleMenu TopMenu(1, MainMenu);

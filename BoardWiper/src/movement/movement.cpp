@@ -12,17 +12,22 @@ extern ezButton *y_limitswitch;
 
 void homeSteppers()
 {
+    CurrentState = States::Homing;
     x_stepper->setSpeed(-HOMING_SPEED);
     y_stepper->setSpeed(HOMING_SPEED);
-    CurrentState = States::Homing;
 }
 
-void moveXAxis()
+void moveXAxisWithEncoder()
 {
     x_stepper->moveTo(lcd_encoder.read());
 }
 
-void moveYAxis()
+void moveYAxisWithEncoder()
 {
+    y_stepper->moveTo(lcd_encoder.read());
+}
 
+void clear()
+{
+    CurrentState = States::Clearing;
 }

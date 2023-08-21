@@ -2,6 +2,7 @@
 
 extern const int HOMING_SPEED;
 
-void moveXAxis();
-void moveYAxis();
+void moveXAxisWithEncoder();
+void moveYAxisWithEncoder();
 void homeSteppers();
+void clear();
